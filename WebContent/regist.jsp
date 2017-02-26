@@ -35,7 +35,8 @@
 		<div class="jumbotron">
 			<h1>感谢您的注册!</h1>
 			<p>来完善下信息吧~</p>
-			<form id="setinfo" action="setinfo" method="post">
+			<p>PS:你即将进入你的主页，点击右上角的用户名即可更改设置</p>
+			<form id="setinfo" action="setinfo?what=init" method="post">
 				<div class="form-group">
 					<div class="input-group">
 						<div class="input-group-addon">

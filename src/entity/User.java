@@ -6,7 +6,7 @@ public class User {
 	private String password;
 	private String oid;
 	private String email;
-	private boolean email_vavlid;
+	private boolean email_valid;
 
 	public int getUid() {
 		return uid;
@@ -48,12 +48,18 @@ public class User {
 		this.email = email;
 	}
 
-	public boolean isEmail_vavlid() {
-		return email_vavlid;
+	public boolean isEmail_valid() {
+		return email_valid;
 	}
 
-	public void setEmail_vavlid(boolean email_vavlid) {
-		this.email_vavlid = email_vavlid;
+	public void setEmail_valid(boolean email_valid) {
+		this.email_valid = email_valid;
+	}
+
+	@Override
+	public String toString() {
+		return "User [uid=" + uid + ", username=" + username + ", password=" + password + ", oid=" + oid + ", email="
+				+ email + ", email_valid=" + email_valid + "]";
 	}
 
 }

@@ -17,34 +17,38 @@ import dao.UserDAO;
 @WebServlet("/login")
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public Login() {
-        super();
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public Login() {
+		super();
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doGet(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String username=request.getParameter("login_username");
-		String password=request.getParameter("login_password");
-		System.out.println(username);
-		System.out.println(password);
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String username = request.getParameter("login_username");
+		String password = request.getParameter("login_password");
 		try {
-			if(UserDAO.login(username, password)){
+			if (UserDAO.login(username, password)) {
 				request.getSession().setAttribute("login", true);
 				request.getSession().setAttribute("username", username);
 				request.getRequestDispatcher("home").forward(request, response);
+			} else {
+				request.getRequestDispatcher("login_error.jsp").forward(request, response);
 			}
 		} catch (SQLException e) {
 		}

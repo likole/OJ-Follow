@@ -2,6 +2,7 @@ package action;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,21 +10,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.MappingDAO;
+import dao.NegletDAO;
 import dao.UserDAO;
-import util.OJUtil;
+import entity.Mapping;
+import entity.Neglet;
+import entity.User;
 
 /**
- * Servlet implementation class Exist
+ * Servlet implementation class Profile
  */
-@WebServlet("/exist")
-public class Exist extends HttpServlet {
+@WebServlet("/profile")
+public class Profile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private String what = null;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public Exist() {
+	public Profile() {
 		super();
 	}
 
@@ -33,30 +37,17 @@ public class Exist extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		what = request.getParameter("what");
-		switch (what) {
-		case "username":
-			String username = request.getParameter("regist_username");
-			try {
-				if (UserDAO.exist(username)) {
-					response.getWriter().println("{\"valid\":false}");
-				} else {
-					response.getWriter().println("{\"valid\":true}");
-				}
-			} catch (SQLException e) {
-				response.getWriter().println("{\"valid\":false}");
-			}
-			break;
-		case "oid":
-			String oid = request.getParameter("oj");
-			if (OJUtil.exist(oid)) {
-				response.getWriter().println("{\"valid\":true}");
-			} else {
-				response.getWriter().println("{\"valid\":false}");
-			}
-		default:
-			break;
+		try {
+			User user = UserDAO.get((String) request.getSession().getAttribute("username"));
+			List<Mapping> mappings = MappingDAO.get((String) request.getSession().getAttribute("username"));
+			List<Neglet> neglets = NegletDAO.get((String) request.getSession().getAttribute("username"));
+			request.setAttribute("user", user);
+			request.setAttribute("mappings", mappings);
+			request.setAttribute("neglets", neglets);
+			request.getRequestDispatcher("profile.jsp").forward(request, response);
+		} catch (SQLException e) {
 		}
+
 	}
 
 	/**

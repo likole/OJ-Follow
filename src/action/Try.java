@@ -54,9 +54,9 @@ public class Try extends HttpServlet {
 		for (String string : your) {
 			rsSet.remove(string);
 		}
-		String[] arr = new String[rsSet.size()];     
-        rsSet.toArray(arr);
-        Arrays.sort(arr);
+		String[] arr = new String[rsSet.size()];
+		rsSet.toArray(arr);
+		Arrays.sort(arr);
 		request.setAttribute("data", arr);
 		request.getRequestDispatcher("try.jsp").forward(request, response);
 	}

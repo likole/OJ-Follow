@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@page import="dao.ProblemDAO"%>
+<%
+	if (session.getAttribute("login") == null)
+		response.sendRedirect("index.jsp");
+%>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -42,7 +46,7 @@ body {
 			</div>
 			<div class="collapse navbar-collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li class="active"><a>首页</a></li>
+					<li class="active"><a>主页</a></li>
 				</ul>
                 <div class="navbar-right navbar-text">
                 	你好,<a href="profile"><%=session.getAttribute("username") %></a>
@@ -81,7 +85,7 @@ body {
 								前往</a>
 						</div>
 						<div class="col-sm-4">
-							<button class="btn btn-sm btn-danger btn-block">忽略</button>
+							<a class="btn btn-sm btn-danger btn-block" href="setinfo?what=add_neglet&pid=<%=str[i]%>">忽略</a>
 						</div>
 					</td>
 				</tr>
