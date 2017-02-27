@@ -1,3 +1,4 @@
+<%@page import="util.MD5Util"%>
 <%@page import="entity.Neglet"%>
 <%@page import="entity.User,java.util.List,entity.Mapping"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
@@ -65,7 +66,7 @@ body {
 						<td><%=user.getEmail()%> <span
 							class="label label-<%=user.isEmail_valid() ? "success" : "danger"%>"><%=user.isEmail_valid() ? "已验证" : "未验证"%></span></td>
 						<td><a data-toggle="modal" data-target="#change_email">更改</a>
-							<a>验证</a></td>
+							<%=user.isEmail_valid() ? "" : ("<a href='mail?verify="+MD5Util.getMD5(user.getEmail())+"'>验证</a>") %></td>
 					</tr>
 					<tr>
 						<td>OJ账号</td>
@@ -86,7 +87,7 @@ body {
 							<td><%=mapping.getAlias()%></td>
 							<td><%=mapping.getTargetid()%></td>
 							<td><a
-								href="setinfo?what=delete_following&id=<%=mapping.getMid()%>&verify=<%=mapping.getMid() ^ (int) user.getUsername().charAt(0)%>">删除</a></td>
+								href="setinfo?what=delete_following&id=<%=mapping.getMid()%>&verify=<%=MD5Util.getMD5(mapping.getMid()+user.getUsername())%>">删除</a></td>
 						</tr>
 						<%
 							}

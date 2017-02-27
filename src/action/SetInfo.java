@@ -1,6 +1,7 @@
 package action;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
@@ -14,6 +15,7 @@ import dao.NegletDAO;
 import dao.UserDAO;
 import entity.Mapping;
 import entity.Neglet;
+import util.MD5Util;
 
 /**
  * Servlet implementation class SetInfo
@@ -65,15 +67,18 @@ public class SetInfo extends HttpServlet {
 			break;
 
 		case "delete_following":
-			if ((Integer.parseInt(request.getParameter("id")) ^ (int) username.charAt(0)) == Integer
-					.parseInt(request.getParameter("verify"))) {
-				try {
-					MappingDAO.delete(Integer.parseInt(request.getParameter("id")));
-				} catch (NumberFormatException e) {
-					e.printStackTrace();
-				} catch (SQLException e) {
-					e.printStackTrace();
+			try {
+				if (MD5Util.getMD5(request.getParameter("id")+username).equals(request.getParameter("verify"))) {
+					try {
+						MappingDAO.delete(Integer.parseInt(request.getParameter("id")));
+					} catch (NumberFormatException e) {
+						e.printStackTrace();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 				}
+			} catch (NoSuchAlgorithmException e3) {
+				e3.printStackTrace();
 			}
 			response.sendRedirect("profile");
 			break;
@@ -102,6 +107,7 @@ public class SetInfo extends HttpServlet {
 		case "change_email":
 			try {
 				UserDAO.changeEmail(username, request.getParameter("email"));
+				UserDAO.changeEmailState(username, false);
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}

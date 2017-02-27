@@ -67,6 +67,17 @@ public class UserDAO {
 		stmt.execute();
 	}
 
+	public static void changeEmailState(String username, boolean isValid) throws SQLException {
+		Connection conn = DBUtil.getConnection();
+		PreparedStatement stmt = null;
+
+		String sql = "UPDATE `user` SET `email_valid` = ? WHERE `user`.`username` = ?";
+		stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, isValid?1:0);
+		stmt.setString(2, username);
+		stmt.execute();
+	}
+
 	public static void changeOid(String username, String oid) throws SQLException {
 		Connection conn = DBUtil.getConnection();
 		PreparedStatement stmt = null;
