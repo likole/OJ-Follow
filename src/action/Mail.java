@@ -79,7 +79,7 @@ public class Mail extends HttpServlet {
 							(String) request.getSession().getAttribute("username"), "UTF-8"));
 			message.setSubject("OJ-Follow 邮箱验证", "UTF-8");
 			Calendar calendar=Calendar.getInstance();
-			String url=request.getServletContext().getRealPath("/")+"email_verify?username="+(String) request.getSession().getAttribute("username")+"&email="+targetEmail+"&code="+MD5Util.getMD5(calendar.get(Calendar.YEAR)+calendar.get(Calendar.MONTH)+calendar.get(Calendar.DAY_OF_MONTH)+targetEmail);
+			String url="http://www.likole.cn:8080/OJ-Follow/"+"email_verify?username="+(String) request.getSession().getAttribute("username")+"&email="+targetEmail+"&code="+MD5Util.getMD5(calendar.get(Calendar.YEAR)+calendar.get(Calendar.MONTH)+calendar.get(Calendar.DAY_OF_MONTH)+targetEmail);
 			message.setContent((String) request.getSession().getAttribute("username") + ",您好！<br/>感谢您注册OJ-Follow!<br/>点击此链接激活:<a href='"+url+"'>"+url+"</a>",
 					"text/html;charset=UTF-8");
 			message.setSentDate(new Date());
@@ -104,7 +104,8 @@ public class Mail extends HttpServlet {
 				}
 			}
 		}
-		response.getWriter().println("<script>alert('验证邮件已发往邮箱，请进入邮箱验证。');history.go(-1);</script>");
+		response.setCharacterEncoding("utf-8");
+		response.getWriter().println("<script>alert('验证邮件已发往邮箱，请进入邮箱查看。验证链接当日有效。');history.go(-1);</script>");
 	}
 
 	/**

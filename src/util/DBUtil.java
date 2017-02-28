@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class DBUtil {
 	private static final String url = "jdbc:mysql://localhost:3306/oj_follow?useUnicode=true&characterEncoding=UTF-8";
 	private static final String username = "root";
-	private static final String password = "";
+	private static final String password = "5vm8bIopZKVXX1d";
 	private static Connection conn = null;
 
 	static {

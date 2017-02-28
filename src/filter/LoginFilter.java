@@ -42,7 +42,26 @@ public class LoginFilter implements Filter {
 		HttpSession session = request2.getSession();
 		String path = request2.getRequestURI();
 
-		String[] noFilter = { "index.jsp", "try", "login_error.jsp", "regist", "exist", "login","email_verify"};
+		String[] noFilter = {
+				//jsp
+				"index.jsp",
+				"login_error.jsp",
+				//servlet
+				"try", 			
+				"regist", 
+				"exist", 
+				"login",
+				"email_verify",
+				//css
+				"css/bootstrap.css",
+				"css/bootstrapValidator.css",
+				//js
+				"js/jquery.min.js",
+				"js/bootstrap.js",
+				"js/bootstrapValidator.js",
+				"js/language/zh_CN.js",
+				//font
+				"glyphicons-halflings-regular"};
 		for (String string : noFilter) {
 			if(path.contains(string))
 			{
